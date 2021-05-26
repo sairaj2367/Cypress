@@ -1,0 +1,22 @@
+On branch master
+Your branch is up to date with 'origin/master'.
+
+Changes not staged for commit:
+	modified:   cypress/integration/examples/PageObjects/Appointment.js
+	modified:   cypress/integration/examples/PageObjects/Calendar.js
+	modified:   cypress/integration/examples/PageObjects/LoginDetails.js
+	modified:   cypress/integration/examples/PageObjects/LoginPage.js
+	deleted:    cypress/integration/examples/test.js
+
+Untracked files:
+	--all
+	.gitignore
+	cypress.json
+	cypress/integration/examples/AppointmetTest.js
+	cypress/integration/examples/BookHistory.js
+	cypress/integration/examples/PageObjects/AddPatient.js
+	cypress/integration/examples/PageObjects/BookingHistory.js
+	cypress/integration/examples/backend.js
+	package-lock.json
+
+no changes added to commit

@@ -1,9 +1,18 @@
 class LoginPage
 {
-    visit()
+    visit(value)
     {
         cy.viewport(1366,768)
-        cy.visit("http://app-23191.on-aptible.com/")
+        if(value=="dev")
+        {
+            cy.visit("http://app-23191.on-aptible.com/")
+        }
+        if(value=="live")
+        {
+            cy.visit("https://www.calystaproemr.com/")
+        }
+
+      
     }
 
     Checkcheckbox()
@@ -16,6 +25,7 @@ class LoginPage
     {
         const button=cy.get("[type='submit']")
         button.click()
+        .wait(3000)
     }
 
     Validationmessage()

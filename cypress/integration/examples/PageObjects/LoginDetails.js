@@ -1,6 +1,6 @@
 class LoginDetails
 {
-    fillEmailPassword(value)
+    loginDetails(value)
     {
         switch (value) {
             case 0:
@@ -36,6 +36,15 @@ class LoginDetails
                 const x=cy.get("[name='password']")
                 x.clear()
                 x.type("password12")
+                break;
+
+                case 4:
+                const ba=cy.get("[name='username']")
+                ba.clear()
+                ba.type("sairaj_one")
+                const xs=cy.get("[name='password']")
+                xs.clear()
+                xs.type("12345678Q@z")
                 break;
           }
           return this
