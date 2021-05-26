@@ -37,14 +37,24 @@ class BookingHistory
         clear.click()
     }
 
-    saveStatus(value1)
+    saveStatus(value1,value2)
     {
-        const patient = cy.get('#main-wrapper > div.page-wrapper > div > div:nth-child(2) > div > div > div.card-body')
+         
+        cy.get("tr td")
+        cy.get("td:nth-child(2)").each(($e1,index,$list) => {
+            const text = $e1.text();
+            if (text.includes(value1)) {
+              cy.get("td:nth-child(2)").eq(index);
+              const status=cy.get('tr [name="status"]')
+              status.eq(index1).select(value2,{force:true})
+            }
+          });
+    }
 
-        if(patient.contains(value1))
-        {
-            cy.click(' [class="fa fa-trash text-danger m-r-10"]')
-        }
+    showentries(value)
+    {
+        const drop = cy.get('[name="page_filter"]')
+        drop.select("Show" +" "+value+" " + "entries",{force:true})
     }
 }
 export default BookingHistory

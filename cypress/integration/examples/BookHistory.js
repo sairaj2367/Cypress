@@ -49,6 +49,7 @@ describe('Appointment', () =>
         login.Checkcheckbox()
         login.submit()
         b.Appt()
-        b.saveStatus("Tester check")
+        b.showentries(25)
+        b.saveStatus("SAI RAJ","Booked")
     })
 })
