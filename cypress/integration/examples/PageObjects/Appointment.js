@@ -41,7 +41,7 @@ class Appointment
             return this
         }
     
-    selectProviderResoruceType(value1,value2)
+    selectProviderResoruceType(value1,value2,value3)
     {
         const select_resource=cy.get("[id='resource-type']")
         if(value1=="provider-option")
@@ -53,6 +53,11 @@ class Appointment
             select_provider_type.click()
             select_provider_type.type(value2)
             select_provider_type.type("{enter}")
+            if(value3=="zoom")
+            {
+                const zoom=cy.get('[type="checkbox"]')
+                zoom.check({force:true})
+            }
             return this
         }
         else (value1=="resource-option")
@@ -71,27 +76,20 @@ class Appointment
 
    selectService(value)
     {
-        const field = cy.get("[class='input select required'] [id='service_0']")
-        /*if(value==183)
-        {
-            field.select("183").should('have.value','183')
-            return this
-        }
-        else (value==101)
-        {
-            field.select("101").should('have.value','101')
-            return this
-        }
-        */
-        //field.contains(value)
+        const field = cy.get("#service-section > div > div.col-md-4 > div [id='service_0']")
         field.select(value,{force:true})
         return this
         
     }
+    addmoreservice(value)
+    {
+        const s=cy.get('[id="add-more-appointment-services"]')
+        s.click()
+    }
        
     addApptNote(value)
     {
-        const note =cy.get(" [placeholder='Add appointments Note']")
+        const note =cy.get('[name="appointment_notes"]')
         note.type(value)
     }
 

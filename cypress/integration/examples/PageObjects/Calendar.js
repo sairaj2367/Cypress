@@ -9,7 +9,7 @@ class Calendar
             elem.val(value1);
         });
         
-        const add1= cy.get('[id="appointment-time"]')
+        const add1= cy.get('[name="time"]')
         add1.clear()
         add1.type(value2)
 
@@ -24,8 +24,31 @@ class Calendar
             cy.get('[class="confirm"]').click()
         }
         }
-        
+    }
 
+    selecteditdate(value1,value2,value3)
+    {
+        const add= cy.get(" [id='appointment-date']") // date
+        //add.click()
+        add.then(elem => {
+            elem.val(value1);
+        });
+        
+        const add1= cy.get('[name="time"]') //time
+        add1.clear()
+        add1.type(value2)
+
+        const s= cy.get('[type="submit"]') //submit
+        s.click()
+        
+        if("booked"==value3)
+        {
+            const h= cy.get('body > div.sweet-alert.showSweetAlert.visible > h2')
+            if(h.contains("Confirmation Required!"))
+            {
+                cy.get('[class="confirm"]').click()
+            }
+        }
     }
 /* 
     month(value,value1,value2)

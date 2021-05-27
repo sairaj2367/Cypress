@@ -37,24 +37,60 @@ class BookingHistory
         clear.click()
     }
 
+    showentries(value)
+    {
+        const drop = cy.get('[name="page_filter"]')
+        drop.select("Show" +" "+value+" " + "entries",{force:true})
+    }
+
     saveStatus(value1,value2)
     {
-         
+         //&&
         cy.get("tr td")
         cy.get("td:nth-child(2)").each(($e1,index,$list) => {
             const text = $e1.text();
             if (text.includes(value1)) {
               cy.get("td:nth-child(2)").eq(index);
               const status=cy.get('tr [name="status"]')
-              status.eq(index1).select(value2,{force:true})
+              .wait(2000)
+              status.eq(index).select(value2,{force:true})
+              const save=cy.get('[class="table-responsive"] [type="submit"]')
+              .wait(2000)
+              save.eq(index).click()
             }
           });
     }
 
-    showentries(value)
+    del(value)
     {
-        const drop = cy.get('[name="page_filter"]')
-        drop.select("Show" +" "+value+" " + "entries",{force:true})
+        cy.get("tr td")
+        cy.get("td:nth-child(2)").each(($e1,index,$list) => {
+            const text = $e1.text();
+            if (text.includes(value)) {
+              cy.get("td:nth-child(2)").eq(index);
+              const del=cy.get('[class="fa fa-trash text-danger m-r-10"]')
+              del.eq(index).click({force:true})
+            }
+          });
+    }
+
+    edit(value)
+    {
+        cy.get("tr td")
+        cy.get("td:nth-child(2)").each(($e1,index,$list) => {
+            const text = $e1.text();
+            if (text.includes(value)) {
+              cy.get("td:nth-child(2)").eq(index);
+              const del=cy.get('[class="fa fa-pencil text-primary m-r-10"]')
+              del.eq(index).click({force:true})
+            }
+          });
+    }
+
+    status(value)
+    {
+        const s = cy.get('[id="status"]')
+        s.select(value,{force:true})
     }
 }
 export default BookingHistory
