@@ -50,6 +50,27 @@ class Calendar
             }
         }
     }
+
+    selecttimeslot(value1,value2)
+    {
+        const starttime=cy.get('[id="start-time-slot"]')
+        starttime.select(value1)
+        const endtime=cy.get('[id="end-time-slot"]')
+        endtime.select(value2)
+        const confirm=cy.get('[id="confirm-calendar-filter"]')
+        confirm.click()
+        .wait(4000)
+    }
+
+
+
+
+
+
+
+
+
+
 /* 
     month(value,value1,value2)
         {

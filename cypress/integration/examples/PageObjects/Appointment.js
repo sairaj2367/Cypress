@@ -6,21 +6,13 @@ class Appointment
     {
         const field = cy.get("#global-facility")
             //field.contains(value)
-            field.select(value,{force:true})
+            field.select(value+" ...",{force:true})
             return this        
     }
-    appt()
+    timeselect()
     {
-        //const d=cy.get(".ti-menu")
-        //d.click()
-        const Appointment=cy.get("[class='mdi mdi-calendar-clock']")
-        Appointment.click()
-        .wait(4000)
-        const add_appt=cy.get("[href='/appointments/add']")
-        add_appt.click()
         cy.get("[data-time='09:00:00']").click()
         .wait(2000)
-
     }    
     searchBox(value)
     {
@@ -47,12 +39,12 @@ class Appointment
         if(value1=="provider-option")
         {
             select_resource.select("provider-option").should('have.value','provider-option')
-            const select_provider=cy.get("[id='select2-provider-id-container']")
-            select_provider.click()
-            const select_provider_type= cy.get("body > span > span > span.select2-search.select2-search--dropdown > input")
-            select_provider_type.click()
-            select_provider_type.type(value2)
-            select_provider_type.type("{enter}")
+            const select_provider=cy.get('[name="provider_id"]')
+            select_provider.select(value2,{force:true})
+            // const select_provider_type= cy.get("body > span > span > span.select2-search.select2-search--dropdown > input")
+            // select_provider_type.click()
+            // select_provider_type.type(value2)
+            // select_provider_type.type("{enter}")
             if(value3=="zoom")
             {
                 const zoom=cy.get('[type="checkbox"]')
@@ -78,8 +70,7 @@ class Appointment
     {
         const field = cy.get("#service-section > div > div.col-md-4 > div [id='service_0']")
         field.select(value,{force:true})
-        return this
-        
+        return this       
     }
     addmoreservice(value)
     {
@@ -230,6 +221,140 @@ class Appointment
         .invoke('provider one', '')
         .trigger('change')
         provider.type(value).click()
-    }  
+    }
+    
+    apptcalendar()
+    {
+        const Appointment=cy.get("[class='mdi mdi-calendar-clock']")
+        Appointment.click()
+        .wait(4000)
+        const add_appt=cy.get("[href='/appointments/add']")
+        add_appt.click()
+    }
+
+    appoimtmentdeletepopup(value)
+    {
+        cy.get('[id="calendar"]')
+        cy.get(' [class="fc-title"]').each(($e1,index,$list) => {
+            const text = $e1.text();
+            if (text.includes(value)) {
+              cy.get('[class="fc-title"]').eq(index).click();
+            }
+          });
+        const del =cy.get('[id="apt-delete-button"]')
+        del.click()  
+    }
+
+    appoimtmentupdatepopup(value)
+    {
+        cy.get('[id="calendar"]')
+        cy.get(' [class="fc-title"]').each(($e1,index,$list) => {
+            const text = $e1.text();
+            if (text.includes(value)) {
+              cy.get('[class="fc-title"]').eq(index).click();
+            }
+          });
+        const update =cy.get('[id="apt-update-button"]')
+        update.click()  
+    }
+
+    appoimtmentdashpopup(value)
+    {
+        cy.get('[id="calendar"]')
+        cy.get(' [class="fc-title"]').each(($e1,index,$list) => {
+            const text = $e1.text();
+            if (text.includes(value)) {
+              cy.get('[class="fc-title"]').eq(index).click();
+            }
+          });
+        const dash =cy.get('[id="apt-dashboard-button"]')
+        dash.click()  
+    }
+
+    stickynotes(value)
+    {
+        const stickynote=cy.get('[title="Sticky Note"]')
+        stickynote.click()
+        const textarea=cy.get('[name="sticky-note"]')
+        textarea.type(value)
+        const update=cy.get('[onclick="updateStickyNote()"]')
+        update.click()
+    }
+
+    icon()
+    {
+        const bell=cy.get('[id="notification-icon"]')
+        bell.click()
+    }
+
+    approve(value)
+    {
+        cy.get('[id="notification-list"]')
+        cy.get('[id="notification-list"] span:nth-child(n)').each(($e1,index,$list) => {
+            const text = $e1.text();
+            if (text.includes(value)) {
+              cy.get(' [id="notification-list"] span:nth-child(n)').eq(index);
+              const approve =cy.get('[title="Approve"]')
+              approve.eq(index).click()
+            }
+          });
+         
+    }
+
+    view(value)
+    {
+        cy.get('[id="notification-list"]')
+        Appointment.icon
+        cy.get('[id="notification-list"] span:nth-child(n)').each(($e1,index,$list) => {
+            const text = $e1.text();
+            if (text.includes(value)) {
+              cy.get(' [id="notification-list"] span:nth-child(n)').eq(index);
+            //   const mark =cy.get('[title="Mark as read"]')
+            //   mark.eq(index).click({force:true})
+              const view= cy.get('[title="View Product"]')
+              view.eq(index).click({force:true})
+            }
+          });
+    }
+
+   mark(value)
+    {
+        cy.get('[id="notification-list"]')
+        Appointment.icon
+        cy.get('[id="notification-list"] span:nth-child(n)').each(($e1,index,$list) => {
+            const text = $e1.text();
+            if (text.includes(value)) {
+              cy.get(' [id="notification-list"] span:nth-child(n)').eq(index);
+              const mark =cy.get('[title="Mark as read"]')
+              mark.eq(index).click({force:true})
+            }
+          });
+    }
+
+    markall()
+    {
+        const markall= cy.get('[id="mark-notification-as-read"]')
+        markall.click()
+    }
+
+    todaysappt()
+    {
+        const todaysappt=cy.get('[href="/appointments/add/"]')
+        todaysappt.click()
+    }
+
+    searchprovider(value1,value2)
+    {
+        const provider=cy.get('[for="radio_3"]')
+        provider.click()
+        const selectp=cy.get('[id="provider-portion"] [id="filter-provider-id"]')
+        selectp.select(value1,value2,{force:true})
+    }
+
+    searchresource()
+    {
+        const resource=cy.get('[for="radio_2"]')
+        resource.click()
+    }
 }
 export default Appointment

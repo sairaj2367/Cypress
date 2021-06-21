@@ -92,5 +92,12 @@ class BookingHistory
         const s = cy.get('[id="status"]')
         s.select(value,{force:true})
     }
+
+    export()
+    {
+        const button = cy.get('[class="btn btn-danger"]')
+        button.click()
+        cy.reload()
+    }
 }
 export default BookingHistory
