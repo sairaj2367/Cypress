@@ -11,7 +11,7 @@ class Appointment
     }
     timeselect()
     {
-        cy.get("[data-time='09:00:00']").click()
+        cy.get("[data-time='09:00:00']",{force:true}).click({force:true})
         .wait(2000)
     }    
     searchBox(value)
@@ -238,7 +238,7 @@ class Appointment
         cy.get(' [class="fc-title"]').each(($e1,index,$list) => {
             const text = $e1.text();
             if (text.includes(value)) {
-              cy.get('[class="fc-title"]').eq(index).click();
+              cy.get('[class="fc-title"]').eq(index).click({force:true});
             }
           });
         const del =cy.get('[id="apt-delete-button"]')
@@ -251,7 +251,7 @@ class Appointment
         cy.get(' [class="fc-title"]').each(($e1,index,$list) => {
             const text = $e1.text();
             if (text.includes(value)) {
-              cy.get('[class="fc-title"]').eq(index).click();
+              cy.get('[class="fc-title"]').eq(index).click({force:true});
             }
           });
         const update =cy.get('[id="apt-update-button"]')
@@ -264,7 +264,7 @@ class Appointment
         cy.get(' [class="fc-title"]').each(($e1,index,$list) => {
             const text = $e1.text();
             if (text.includes(value)) {
-              cy.get('[class="fc-title"]').eq(index).click();
+              cy.get('[class="fc-title"]').eq(index).click({force:true});
             }
           });
         const dash =cy.get('[id="apt-dashboard-button"]')

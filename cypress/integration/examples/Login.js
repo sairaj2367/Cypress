@@ -4,7 +4,7 @@
  import LoginDetails from './PageObjects/LoginDetails'
 describe('Login verification', () => 
 {
-    it('Verify valid login', () => 
+    it('Verify login with valid credentials', () => 
     {
      const e=new Exception()   
      const login=new LoginPage()
