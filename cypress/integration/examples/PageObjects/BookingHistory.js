@@ -10,10 +10,10 @@ class BookingHistory
 
     search(value1,value2,value3)
     {
-        const selectprovider = cy.get('[id="select2-provider-id-container"]')
-        selectprovider.click()
-        const textbox = cy.get('[type="search"]')
-        textbox.type(value1).type("{enter}")
+        const selectprovider = cy.get('[id="provider-id"]')
+        selectprovider.select(value1,{force:true})
+        // const textbox = cy.get('[type="search"]')
+        // textbox.type(value1).type("{enter}")
 
         const status2 = cy.get("#main-wrapper > div.page-wrapper > div > div:nth-child(1) > div > div > div.card-body > form > div.form-body > div > div:nth-child(2) > div > div #status")
         status2.select(value2,{force:true})

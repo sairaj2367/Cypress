@@ -21,7 +21,6 @@ describe('Appointment', () =>
     //     b.Appt()
     //     b.search("provider one","Booked","Today")
     //     b.clear()
-      
     // })
 
     // it('Verify no results found message', () => 
@@ -53,10 +52,10 @@ describe('Appointment', () =>
     //     login.submit()
     //     b.Appt()
     //     b.showentries(25)
-    //     b.saveStatus("Ramendra Naik","Pending")
+    //     b.saveStatus("patinet one","Booked")
     // })
 
-    // it('Verify if the global patient can be deleted under booking history', () => 
+    // it('Verify if the patient appointment can be deleted under booking history', () => 
     // {
     //     const e=new Exception()   
     //     const login=new LoginPage()
@@ -72,41 +71,41 @@ describe('Appointment', () =>
     //     b.del("Testing Agent")
     // })
 
-    // it('Verify if the global patient details can be edited under booking history', () => 
-    // {
-    //     const e=new Exception()   
-    //     const login=new LoginPage()
-    //     const details=new LoginDetails()
-    //     const b= new BookingHistory()
-    //     const a =new Appointment()
-    //     const c =new Calendar()
-    //     login.visit("dev")
-    //     e.except()
-    //     details.loginDetails(1)
-    //     login.Checkcheckbox()
-    //     login.submit()
-    //     b.Appt()
-    //     b.showentries(25)
-    //     b.edit("Ramendra Naik")
-    //     a.selectProviderResoruceType("provider-option","provider one","zoom")
-    //     a.selectService("This is service")
-    //     a.addApptNote("hello tester")
-    //     b.status("Pending")
-    //     c.selecteditdate("04/03/2021","09:40AM")
-    // })
-
-    it('Verify if the csv file can be exported', () => 
+    it('Verify if the global patient details can be edited under booking history', () => 
     {
         const e=new Exception()   
         const login=new LoginPage()
         const details=new LoginDetails()
         const b= new BookingHistory()
+        const a =new Appointment()
+        const c =new Calendar()
         login.visit("dev")
         e.except()
         details.loginDetails(1)
         login.Checkcheckbox()
         login.submit()
         b.Appt()
-        b.export()
+        b.showentries(25)
+        b.edit("Testing Agent")
+        a.selectProviderResoruceType("provider-option","provider one","zoom")
+        a.selectService("This is service")
+        a.addApptNote("hello tester")
+        b.status("Pending")
+        c.selecteditdate("04/03/2021","09:40AM","booked")
     })
+
+    // it('Verify if the csv file can be exported', () => 
+    // {
+    //     const e=new Exception()   
+    //     const login=new LoginPage()
+    //     const details=new LoginDetails()
+    //     const b= new BookingHistory()
+    //     login.visit("dev")
+    //     e.except()
+    //     details.loginDetails(1)
+    //     login.Checkcheckbox()
+    //     login.submit()
+    //     b.Appt()
+    //     b.export()
+    // })
 })

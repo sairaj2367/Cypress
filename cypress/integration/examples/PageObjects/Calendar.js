@@ -15,6 +15,7 @@ class Calendar
 
         const s= cy.get('[id="create-appointment"]')
         s.click()
+        .wait(3000)
         
         if("booked"==value3)
         {

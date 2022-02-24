@@ -5,11 +5,15 @@ class LoginPage
         cy.viewport(1366,768)
         if(value=="dev")
         {
-            cy.visit("http://app-23191.on-aptible.com/")
+            cy.visit("http://app-23191.on-aptible.com/", { timeout: 500000 })
         }
         if(value=="live")
         {
-            cy.visit("https://www.calystaproemr.com/")
+            cy.visit("https://www.calystaproemr.com/", { timeout: 500000 })
+            cy.window().then((win) => {
+                // ✅ removes it
+                win.onbeforeunload = null
+              })
         }
 
       
@@ -26,6 +30,7 @@ class LoginPage
         const button=cy.get("[type='submit']")
         button.click()
         .wait(3000)
+        
     }
 
     Validationmessage()

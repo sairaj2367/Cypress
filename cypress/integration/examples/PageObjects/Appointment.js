@@ -54,7 +54,7 @@ class Appointment
         }
         else (value1=="resource-option")
         {
-            select_resource.select("resource-option").should('have.value','resource-option')
+            select_resource.select("resource-option",{force:true}).should('have.value','resource-option')
             const select_resource_option=cy.get("[id='select2-resource-id-container']")
             select_resource_option.click()
             const select_resource_type= cy.get("body > span > span > span.select2-search.select2-search--dropdown > input")
@@ -242,7 +242,8 @@ class Appointment
             }
           });
         const del =cy.get('[id="apt-delete-button"]')
-        del.click()  
+        del.click()
+        .wait(3000)  
     }
 
     appoimtmentupdatepopup(value)
@@ -347,7 +348,7 @@ class Appointment
     {
         const provider=cy.get('[for="radio_3"]')
         provider.click()
-        const selectp=cy.get('[id="provider-portion"] [id="filter-provider-id"]')
+        const selectp=cy.get('#main-wrapper > div.page-wrapper [id="filter-provider-id"]',{force:true})
         selectp.select(value1,value2,{force:true})
     }
 
