@@ -660,6 +660,7 @@ class PatientDash
         this.viewInvoice(value)
         
         //cy.get('[onclick="printPage()"]').click({force:true})//printpage
+        
         cy.window().document().then(function (doc) {
           doc.addEventListener('click', () => {
             setTimeout(function () { doc.location.reload() }, 8000)
