@@ -305,7 +305,27 @@ describe('Patient Dashboard', () =>
     //     dash.searchImage("test","check")//#images > div > div:nth-child(1) > img
     // })
 
-    it('Verify the functionalities under Patient Document sub-module', () => 
+    // it('Verify the functionalities under Patient Document sub-module', () => 
+    // {
+    //     const e=new Exception()   
+    //     const login=new LoginPage()
+    //     const a=new Appointment()
+    //     const details=new LoginDetails()
+    //     const dash=new PatientDash()
+
+    //     login.visit("live")
+    //     e.except()
+    //     details.loginDetails(4)
+    //     login.Checkcheckbox()
+    //     login.submit()
+    //     //a.facilityDropdown("Facility_one")
+    //     a.searchBox(" Tester check ")
+    //     dash.patientdashboard("Patient Documents")
+    //     dash.patientDocument("check","test","testedit")
+        
+    // })
+
+    it('Verify the functionalities under Patient Packages sub-module', () => 
     {
         const e=new Exception()   
         const login=new LoginPage()
@@ -320,8 +340,8 @@ describe('Patient Dashboard', () =>
         login.submit()
         //a.facilityDropdown("Facility_one")
         a.searchBox(" Tester check ")
-        dash.patientdashboard("Patient Documents")
-        dash.patientDocument("check","test","testedit")
+        dash.patientdashboard("Patient Packages")
+        dash.patientPackage("free","hammer","11/08/2022","Tom Provider one","2","22")
         
     })
 })

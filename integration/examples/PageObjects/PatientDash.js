@@ -23,9 +23,14 @@ class PatientDash
        {
          cy.get('[id="document"]').click({force:true})
        }
+
+       if(value=="Patient Packages")
+       {
+          cy.get('[id="patient-packages"]').click({force:true})
+       }
     }
 
-    addPatientPackage(value,value1)
+    addPatientPackage(value)
    {
       const addpatientpackage=cy.get('[data-original-title="Add Patient Packages"]')
       addpatientpackage.click({force:true})
@@ -33,7 +38,7 @@ class PatientDash
       const packagename=cy.get('[name="service_packages_id"]')
       packagename.select(value,{force:true})  
 
-      const add= cy.get('[type="submit"]') 
+      const add= cy.get(' [class="form-actions packages"] [class="btn btn-success"]') 
       add.click({force:true})
       cy.contains('The patient package has been saved.').should('have.class', 'success')
 
@@ -597,6 +602,193 @@ class PatientDash
       cy.get('[class="dtp-btn-ok btn btn-success"]').click({force:true})
       cy.get('[class="input-group-btn"] [type="submit"]').click({force:true})
       cy.get('[class="btn btn-warning"]').click({force:true})
+    }
+
+    patientPackage(value,value1,value2,value3,value4,value5)
+    {
+        this.addPatientPackage(value)
+
+        //view services
+        this.viewService(value)
+
+        //Add taken date
+        this.addTakenDate(value1)
+        cy.get('#myModal > div > div > div > button').click({force:true})
+        this.addTakenDate(value1)
+        cy.get('[class="form-material"] [class="btn btn-default"]').click({force:true})
+        this.addTakenDate(value1)
+        cy.get('[id="service-taken-date"]').type(value2,{force:true})
+
+        cy.window().document().then(function (doc) {
+          doc.addEventListener('click', () => {
+            setTimeout(function () { doc.location.reload() }, 5000)
+          })
+          cy.get('[id="save-taken-date"]').click({force:true})
+        })
+
+        cy.contains('Tester check has taken a service. You can generate the invoice now.').should('have.class',"success")
+        cy.get('[class="btn btn-inverse"]').dblclick({force:true})
+
+         //Payment toggle 
+         this.patientdashboard("Patient Packages")
+         cy.get("td:nth-child(1)").each(($e1,index,$list) => {
+          const text = $e1.text();
+          if (text.includes(value)) {
+            cy.get("td:nth-child(1)").eq(index);
+            const toggle=cy.get('[class="lever"]')
+            toggle.eq(index).dblclick({force:true})
+          }
+        });
+
+        //Invoice add
+        cy.get("td:nth-child(1)").each(($e1,index,$list) => {
+          const text = $e1.text();
+          if (text.includes(value)) {
+            cy.get("td:nth-child(1)").eq(index);
+            const add=cy.get('[class="fa fa-plus text-inverse m-r-10 js-check-services-on-invoice-icon"]')
+            add.eq(index).dblclick({force:true})
+          }
+        });
+        cy.get('[id="custom-discount"]').type(value5,{force:true})
+        cy.get('[class="form-actions"] [class="btn btn-success"]').click({force:true})
+        cy.get('[class="form-group"] [class="text-danger select-provider-warning"]').should('have.text','Please select a provider')
+        cy.get('#add-patient-package-invoice-form > div.form-body > p.text-danger.select-provider-warning').should('have.text','Please select a provider')
+        cy.get('[id="package-invoive-error"]').should('have.text',"Discount can't be more than total amount.")
+        this.packageForm(value3,value4)
+
+        //View Invoice
+        this.viewInvoice(value)
+        
+        //cy.get('[onclick="printPage()"]').click({force:true})//printpage
+        cy.window().document().then(function (doc) {
+          doc.addEventListener('click', () => {
+            setTimeout(function () { doc.location.reload() }, 8000)
+          })
+          cy.get('[data-original-title="Export PDF"]').click({force:true})//exportpdf
+        })        
+        const pay=cy.get('[id="make-authorize-payment"]')
+        pay.click({force:true})//pay
+        cy.get('[id="confirm-payment"]').click({force:true})//modal pay
+        cy.get('[class="modal-header"] [type="button"]').click({force:true})//close modal(icon)
+        pay.click({force:true})//pay
+        cy.get('[class="btn btn-default"]').click({force:true})//cancel modal
+        cy.window().document().then(function (doc) {
+          doc.addEventListener('click', () => {
+            setTimeout(function () { doc.location.reload() }, 8000)
+          })
+          cy.get('[data-original-title="Send Payment Link to email"]').click({force:true})//send payment link
+        })
+        cy.contains('Payment link has been sent to patient.').should('have.class','success')
+        cy.window().document().then(function (doc) {
+          doc.addEventListener('click', () => {
+            setTimeout(function () { doc.location.reload() }, 8000)
+          })
+          cy.get('[data-original-title="Send Email"]').click({force:true})//send email
+        })
+        
+        cy.get('#print-invoice > a.btn.btn-inverse').click({force:true})//back cta
+        cy.reload()
+
+        //Send payment link
+        cy.get("td:nth-child(1)").each(($e1,index,$list) => {
+          const text = $e1.text();
+          if (text.includes(value)) {
+            cy.get("td:nth-child(1)").eq(index);
+            cy.window().document().then(function (doc) {
+              doc.addEventListener('click', () => {
+                setTimeout(function () { doc.location.reload() }, 8000)
+              })
+              cy.get('[class="fa fa-envelope text-success m-r-10"]').eq(index).click({force:true})
+            })
+          }
+        });
+        cy.contains('Payment link has been sent to patient.').should('have.class','success')
+
+        //Edit package
+        cy.get("td:nth-child(1)").each(($e1,index,$list) => {
+          const text = $e1.text();
+          if (text.includes(value)) {
+            cy.get("td:nth-child(1)").eq(index);
+            const edit=cy.get('[class="fa fa-edit text-inverse m-r-10"]')
+            edit.eq(index).dblclick({force:true})
+          }
+        });
+        cy.get('[name="provider_id"]').select(value3,{force:true})
+        cy.get("td:nth-child(1)").each(($e1,index,$list) => {
+          const text = $e1.text();
+          if (text.includes(value1)) {
+            cy.get("td:nth-child(1)").eq(index);
+            const edit=cy.get('[id="cost"]')
+            edit.eq(index).clear({force:true})
+            edit.eq(index).type(value4,{force:true})
+          }
+        });
+        cy.get('[class="form-actions"] [class="btn btn-success"]').click({force:true})
+
+        //Delete Package
+        cy.get("td:nth-child(1)").each(($e1,index,$list) => {
+          const text = $e1.text();
+          if (text.includes(value)) {
+            cy.get("td:nth-child(1)").eq(index);
+            cy.window().document().then(function (doc) {
+              doc.addEventListener('click', () => {
+                setTimeout(function () { doc.location.reload() }, 5000)
+              })
+              cy.get('[class="fa fa-trash text-danger m-r-10"]').eq(index).click({force:true})
+            })
+          }
+        });
+        cy.contains(' The patient package has been deleted.').should('have.class','success')
+    }
+
+    addTakenDate(value)
+    {
+      cy.get("td:nth-child(1)").each(($e1,index,$list) => {
+        const text = $e1.text();
+        if (text.includes(value)) {
+          cy.get("td:nth-child(1)").eq(index);
+          const date=cy.get('[class="btn btn-primary btn-sm js-add-date-taken"]')
+          date.eq(index).click({force:true})
+        }//#myModal > div > div > div > button
+      });
+    }
+    viewService(value)
+    {
+      cy.get("td:nth-child(1)").each(($e1,index,$list) => {
+        const text = $e1.text();
+        if (text.includes(value)) {
+          cy.get("td:nth-child(1)").eq(index);
+          const view=cy.get('[class="view-service-btn m-r-10"]')
+          view.eq(index).click({force:true})
+        }
+      });
+    }
+    invoiceId()
+    {
+      cy.get('[name="inovice_number"]').then(function(text2){
+        text2.text()
+      })
+
+    }
+    viewInvoice(value)
+    {
+      cy.get("td:nth-child(1)").each(($e1,index,$list) => {
+        const text = $e1.text();
+        if (text.includes(value)) {
+          cy.get("td:nth-child(1)").eq(index);
+          const view=cy.get('[class="fa fa-eye text-inverse m-r-10"]')
+          view.eq(index).dblclick({force:true})
+        }
+      });
+    }
+
+    packageForm(value3,value4)
+    {
+      cy.get('[name="provider_id"]').select(value3,{force:true})
+      cy.get('[id="custom-discount"]').clear({force:true})
+      cy.get('[id="custom-discount"]').type(value4,{force:true})
+      cy.get('[class="lever"]').dblclick({force:true},{multiple:true})
+      cy.get('[class="form-actions"] [class="btn btn-success"]').click({force:true})
     }
 }
 export default PatientDash
